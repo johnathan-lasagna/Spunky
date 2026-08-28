@@ -42,4 +42,4 @@ Thank you for wanting to contribute to this project!
 I'm too lazy to write the instructions out so here's
 a quick start-to-finish video guide:
 
-[coming_soon]
+https://www.youtube.com/watch?v=6JtEKj3kNa4

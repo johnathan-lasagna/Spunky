@@ -182,7 +182,10 @@ function App() {
         </p>
         <p className="pl-8">
           automatically clicks the button at the bottom
-          </p>
+        </p>
+        <p className="text-xs">
+          Want to contribute? <a className="underline" href="https://www.youtube.com/watch?v=6JtEKj3kNa4">Watch the video guide</a>
+        </p>
         <p className="text-xs">{packageJson.version}</p>
       </div>
     </main>
