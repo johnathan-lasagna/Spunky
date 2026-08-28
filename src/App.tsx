@@ -184,7 +184,7 @@ function App() {
           automatically clicks the button at the bottom
         </p>
         <p className="text-xs">
-          Want to contribute? <a className="underline" href="https://www.youtube.com/watch?v=6JtEKj3kNa4">Watch the video guide</a>
+          Want to contribute? <a className="underline" href="https://youtu.be/lstNDLiE_SY">Watch the video guide</a>
         </p>
         <p className="text-xs">{packageJson.version}</p>
       </div>
