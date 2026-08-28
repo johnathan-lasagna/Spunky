@@ -4,7 +4,7 @@
       "chaoz impact": {},
       "dance massacre": {},
       "rupture": {},
-      "the eschaton": {},
+      "the escaton": {},
       "cant let go v2": {},
       "kisaragi": {},
       "club": {},
@@ -15,7 +15,38 @@
       "the hills have eyes": {},
       "ghoul": {},
       "viking arena": {},
-      "kappa boss fight": {}
+      "kappa boss fight": {},
+      "i love among us": {},
+      "triple six": {},
+      "the behemoth": {},
+      "gold temple": {},
+      "butiti": {},
+      "collab level": {},
+      "sayonara": {},
+      "paint on track": {},
+      "the robotic rush": {},
+      "slap squad": {},
+      "boogie": {},
+      "astral divinity": {},
+      "AlterGame XVII": {},
+      "vvvvvv": {},
+      "wild west": {},
+      "incipient": {},
+      "sigma interface": {},
+      "xo": {},
+      "ufo on track": {},
+      "cut deep": {},
+      "laser room": {},
+      "floating outskirts": {},
+      "prismatic haze": {},
+      "crimson planet": {},
+      "down bass": {},
+      "nowise": {},
+      "spacetime continuum": {},
+      "lonely travel": {},
+      "rose": {},
+      "toe iv": {},
+      "azure fiesta": {}
     },
     "platformer": {}
   },
@@ -23,16 +54,27 @@
     "classic": {
       "lunatic doom machine": {},
       "grebeworld": {},
-      "nivel": {}
+      "nivel": {},
+      "": {},
+      "a special place": {}
     },
-    "platformer": {}
+    "platformer": {
+      "egg hunt": {},
+      "pseudo zone": {},
+      "kitty cat simulator": {}
+    }
   },
   "hard": {
     "classic": {
-      "unnamed piece": {}
+      "unnamed piece": {},
+      "phantasia": {},
+      "dance of souls": {},
+      "hallucinations": {},
+      "happy hour": {}
     },
     "platformer": {
-      "phalcron": {}
+      "phalcron": {},
+      "in perceptible": {}
     }
   },
   "legendary": {
