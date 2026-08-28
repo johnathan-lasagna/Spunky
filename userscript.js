@@ -12,6 +12,8 @@
 
   let masterStructure = false;
 
+  let selectedLevelDiv;
+
   const fileInput = document.createElement("input");
 
   fileInput.type = "file";
@@ -60,7 +62,17 @@
     const Difficulty = spans[2].innerHTML.toLowerCase().replace("\\n", "").trim();
     const Type = spans[4].innerHTML.toLowerCase().replace("\\n", "").trim();
 
-    console.log("Diff", Difficulty, Type);
+    if (Difficulty === "easy" || Difficulty === "medium" || Difficulty === "hard") {
+      if (Type === "classic" || Type === "platformer") {
+      } else {
+        alert("Image must be selected from a real Sparky game")
+        return;
+      }
+    } else {
+        alert("Image must be selected from a real Sparky game")
+        return;
+    }
+
     const img = target.parentElement?.querySelectorAll("img")[0];
 
     if (!img) {
@@ -68,29 +80,21 @@
       return;
     }
 
-    console.log("img", img);
+    if (selectedLevelDiv) {
+      document.body.removeChild(selectedLevelDiv)
+    }
 
-    const div = document.createElement("div");
+    selectedLevelDiv = document.createElement("div");
 
-    let easySelected;
-    let mediumSelected;
-    let hardSelected;
-    let platformerSelected;
-
-    const handleSelectEasy = () => {};
-    const handleSelectMedium = () => {};
-    const handleSelectHard = () => {};
-    const handleSelect = () => {};
-
-    div.innerHTML = `
+    selectedLevelDiv.innerHTML = `
             <div style="display: flex; flex-direction: column; position: absolute; top: 0; width: 300px; height: 50px; z-index: 9999999; margin-left: -150px; left: 50%; margin-top: 14px;">
                 <input type="text" placeholder="Paste lvl name...">
             </div>
         `;
 
-    document.body.appendChild(div);
+    document.body.appendChild(selectedLevelDiv);
 
-    const input = div.querySelector("input");
+    const input = selectedLevelDiv.querySelector("input");
 
     input.addEventListener("keydown", async (event) => {
       if (event.key === "Enter") {
@@ -124,22 +128,8 @@
             },
         });
 
-        document.body.removeChild(div)
+        document.body.removeChild(selectedLevelDiv)
       }
     });
-
-    //console.log(colors)
-    //GM_setClipboard(JSON.stringify(colors));
-
-    //GM_xmlhttpRequest({
-    //method: "POST",
-    //url: "http://localhost:5000/process",
-    //headers: {
-    //"Content-Type": "application/json"
-    //},
-    //data: JSON.stringify({
-    //image: img.src
-    //})
-    //});
   });
 })();
