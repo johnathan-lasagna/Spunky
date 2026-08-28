@@ -1,0 +1,55 @@
+// WARNING:
+// dogshit html below vvvvvv
+
+import React, { useState } from "react";
+const response = await fetch(`${import.meta.env.BASE_URL}MasterStructure.json`);
+const everyLevel = await response.json();
+
+function Category({ difficultyKey, clickedSpunky, allLevels, setAllLevels, selectedLevels, setSelectedLevels }: { difficultyKey: string, clickedSpunky: boolean, handleRestart?: any, selectedLevels: string[], setSelectedLevels: React.Dispatch<React.SetStateAction<string[]>>, allLevels: string[], setAllLevels: React.Dispatch<React.SetStateAction<any>> }) {
+    const [openCategories, setOpenCategories] = useState<string[]>([])
+
+    const handleOpen = (typeKey: string) => {
+      setOpenCategories([...openCategories, typeKey])
+
+      let aggregate: string[] = []
+      let aggregateObject: any = {}
+      Object.keys(everyLevel[difficultyKey][typeKey]).forEach(val => (aggregate.push(val), aggregateObject[val] = { difficulty: difficultyKey, type: typeKey } ))
+
+      setAllLevels( {...allLevels, ...aggregateObject} )
+      setSelectedLevels([...selectedLevels, ...aggregate])
+    }
+
+    const handleClose = (typeKey: string) => {
+      setOpenCategories(openCategories.filter(item => item !== typeKey))
+
+      let levelsToRemove = Object.keys(everyLevel[difficultyKey][typeKey])
+      setSelectedLevels(selectedLevels.filter(val => levelsToRemove.indexOf(val) === -1))
+    }
+
+  return (
+    <div>
+          {Object.keys(everyLevel[difficultyKey]).map(
+            (typeKey) => {
+              return <div className="bg-purple-600 flex text-white flex-row gap-4">
+                <p className="w-20 cursor-pointer select-none" onClick={() => {
+                  if (openCategories.indexOf(typeKey) !== -1) {
+                    handleClose(typeKey)
+                  } else handleOpen(typeKey)
+                }}>{typeKey} <span className="text-xs">({Object.keys(everyLevel[difficultyKey][typeKey]).length})</span></p>
+                <div className="flex flex-col">
+                  {openCategories.indexOf(typeKey) !== -1 ? <div><button className="cursor-pointer select-none" onClick={() => handleClose(typeKey)}>^</button>{Object.keys(everyLevel[difficultyKey][typeKey]).sort((a, b) => {const aSelected = selectedLevels.includes(a);const bSelected = selectedLevels.includes(b);return Number(bSelected) - Number(aSelected);}).map(
+                    (levelNameKey) => {
+                      const inRotation = selectedLevels.indexOf(levelNameKey) !== -1;
+                    return (<div style={{ color: inRotation ? "#ffffff" : "#ff7777"}}>
+                      <button className="cursor-pointer select-none flex flex-col" onClick={() => setSelectedLevels(selectedLevels.indexOf(levelNameKey) === -1 ? [...selectedLevels, levelNameKey] : selectedLevels.filter(val => val !== levelNameKey))}>{inRotation && <img className="w-24" src={`${import.meta.env.BASE_URL}${clickedSpunky ? "le_jet_prive_a_tyty" : levelNameKey.trim().replace(/ /g, "_")}.webp`}/>}<p className="pb-4 -mt-1">{clickedSpunky ? "le jet prive a tyty" : levelNameKey}</p></button>
+                      </div>)}
+                  )}</div> : <button className="cursor-pointer select-none" onClick={() => handleOpen(typeKey)}>v</button>}
+                </div>
+              </div>
+            }
+          )}
+        </div>
+  )
+}
+
+export default Category
