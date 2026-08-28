@@ -109,10 +109,11 @@
           name: formattedForFileName,
           saveAs: true,
           onerror: (error) => {
-            alert("Image download failed:", error);
+            alert("Image download failed: " + error);
           },
         })
 
+        const previousVersion = structuredClone(masterStructure)
         masterStructure[Difficulty][Type][value.trim()] = {}
 
         const json = JSON.stringify(masterStructure, null, 2);
@@ -124,7 +125,8 @@
             name: "MasterStructure.json",
             saveAs: true,
             onerror: (error) => {
-              alert("JSON download failed:", error);
+              alert("JSON download failed: " + error);
+              masterStructure = { ...previousVersion }
             },
         });
 
