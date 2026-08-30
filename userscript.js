@@ -105,6 +105,8 @@
         selectedInput.focus();
 
         if (e.key === "Enter") {
+        selectedInput.focus();
+
           const value = selectedInput.value;
 
           if (!(selectedInput.value.length > 0)) return;

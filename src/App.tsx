@@ -123,7 +123,7 @@ function App() {
 
   return (
     <main className="min-h-screen w-screen flex flex-row bg-[#232328] text-slate-100">
-      <div className="w-1/3 max-h-screen overflow-y-auto">
+      <div className="w-1/2 md:w-1/3 max-h-screen overflow-y-auto">
       {Object.keys(everyLevel).map(
         (difficultyKey) => <div>
           <p>{difficultyKey}</p>
@@ -131,8 +131,8 @@ function App() {
         </div>
       )}
       </div>
-      <div className="relative w-1/3 text-center flex flex-col">
-        {selectedLevels.length > 0 ? <div className="p-6 w-full flex flex-col items-center h-full border-8"
+      <div className="w-1/2 md:w-1/3 text-center flex flex-col">
+        {selectedLevels.length > 0 ? <div className="relative p-6 max-h-screen w-full flex flex-col items-center h-full border-8"
         style={{ borderColor:
           currentLevel ?
           allLevels[currentLevel].difficulty === "easy" ?
@@ -144,9 +144,9 @@ function App() {
             "#ff9bfa"
             : ""
         }}>
-          <div className="flex flex-col items-center w-full gap-4">
-            <div className="h-118.75">
-            {currentLevel &&  <div><div className="h-110">{image}</div> <p>Difficulty: {allLevels[currentLevel].difficulty}</p><p>Type: {allLevels[currentLevel].type}</p></div>}
+          <div className="flex flex-col items-center self-end w-full gap-4">
+            <div className="h-fit">
+            {currentLevel &&  <div><div className="h-fit">{image}</div> <p>Difficulty: {allLevels[currentLevel].difficulty}</p><p>Type: {allLevels[currentLevel].type}</p></div>}
             </div>
             {answerRevealed && <p>{currentLevel}</p> || <p>&nbsp;</p>}
             {!answerRevealed && currentLevel && <input
@@ -162,14 +162,14 @@ function App() {
             />}
           </div>
         </div> : <p>Select which levels to play</p>}
-        {selectedLevels.length > 0 && <div className="absolute bottom-0 left-1/2 -ml-12 mb-6 flex flex-col gap-4">
-        {streak}
+        {selectedLevels.length > 0 && <div className="absolute self-center bottom-0 mb-64 sm:mb-32 md:mb-6 left-1/2 md:-ml-12 flex flex-col gap-4">
+        <p className="pointer-events-nonex">{streak}</p>
           {answerRevealed && <button ref={buttonRef} className="w-24 h-12 bg-green-500 rounded-md cursor-pointer" onClick={() => handleRestart()}>Play Again</button>}
           {currentLevel && !answerRevealed && <button ref={buttonRef} className="cursor-pointer w-24 h-12 bg-amber-500 rounded-md" onClick={() => setAnswerRevealed(true)}>Reveal Answer</button>}
           {!currentLevel && <button ref={buttonRef} onClick={() => handleStartGame()} className="w-24 h-12 bg-purple-500 cursor-pointer rounded-md">Start</button>}
         </div>}
       </div>
-      <div className="w-1/3 bg-amber-200 text-black flex flex-col px-4"><img onClick={() => setClickedSpunky(!clickedSpunky)} className="cursor-pointer" src={`${import.meta.env.BASE_URL}Spunky.webp`} alt="Spunky" />
+      <div className="w-1/6 md:w-1/3 bg-amber-200 text-black flex flex-col px-4"><img onClick={() => setClickedSpunky(!clickedSpunky)} className="cursor-pointer" src={`${import.meta.env.BASE_URL}Spunky.webp`} alt="Spunky" />
       How to play:
       <p className="pl-4">
           Select the levels you want to play with by revealing them in the sidebar.
