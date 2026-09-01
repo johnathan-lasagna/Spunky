@@ -111,8 +111,8 @@ function App() {
     };
   }
 
-  const handleGuessLevel = (input: string) => {
-    if (input.toLowerCase() === currentLevel.toLowerCase()) {
+  const handleGuessLevel = (input: string) => { // allows duplicate level names if you put a space at the end of the file name
+    if (input.toLowerCase().trim() === currentLevel.toLowerCase().trim()) {
       setInput("")
       setStreak(streak + 1)
       handleRestart(true)
