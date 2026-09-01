@@ -18,10 +18,13 @@ function App() {
   const [currentLevel, setCurrentLevel] = useState<string>("");
   const [answerRevealed, setAnswerRevealed] = useState<boolean>(false);
   const [input, setInput] = useState("");
-  const [streak, setStreak] = useState(0);
+  const [streak, setStreak] = useState<number>(0);
+  const [streakLevels, setStreakLevels] = useState<string[]>([]);
   const [image, setImage] = useState<any>();
   const [clickedSpunky, setClickedSpunky] = useState<boolean>(false);
   const [useIgnoredLevels, setUseIgnoredLevels] = useState<boolean>(false);
+  const [hideLevels, setHideLevels] = useState<boolean>(false);
+  const [showLevelsNotInStreak, setShowLevelsNotInStreak] = useState<boolean>(false);
 
   const inputRef = useRef<HTMLInputElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
@@ -95,8 +98,14 @@ function App() {
     } else setCurrentLevel(level)
 
     if (increaseStreak) {
+      if (streakLevels.indexOf(currentLevel) === -1) {
+        setStreakLevels([...streakLevels, currentLevel])
+      }
       setStreak(streak + 1)
-    } else setStreak(0)
+    } else  {
+      setStreakLevels([])
+      setStreak(0)
+    }
 
     setImage(null);
 
@@ -117,6 +126,9 @@ function App() {
   const handleGuessLevel = (input: string) => { // allows duplicate level names if you put a space at the end of the file name
     if (input.toLowerCase().trim() === currentLevel.toLowerCase().trim()) {
       setInput("")
+      if (streakLevels.indexOf(input) === -1) {
+        setStreakLevels([...streakLevels, input])
+      }
       setStreak(streak + 1)
       handleRestart(true)
     } else {
@@ -127,14 +139,25 @@ function App() {
   return (
     <main className="min-h-screen w-screen flex flex-row bg-[#232328] text-slate-100">
       <div className="w-1/2 md:w-1/3 max-h-screen overflow-y-auto">
-      <div className="flex flex-row gap-2 text-xs">
+      <div className="flex flex-row gap-8 text-xs p-2">
+        <div className="flex flex-row gap-2 ml-28">
         <input onClick={() => setUseIgnoredLevels(!useIgnoredLevels)} name="Use all levels" title="Use ignored levels" type="checkbox" />
         Use ignored levels
+        </div>
+        <div className="flex flex-row gap-2">
+        <input onClick={() => setShowLevelsNotInStreak(!showLevelsNotInStreak)} name="Show levels not in streak" title="Show levels not in streak" type="checkbox" />
+        Show levels not in streak
+        </div>
+        <div className="absolute top-0 flex flex-row gap-2 p-2">
+        <input onClick={() => setHideLevels(!hideLevels)} name="Hide levels" title="Hide levels" type="checkbox" />
+        Hide levels
+        </div>
       </div>
+      {showLevelsNotInStreak && <div>{streakLevels.length > 0 && selectedLevels.filter((lvl: string) => streakLevels.indexOf(lvl) === -1).map((lvl: string) => <p>{lvl}</p>)}</div>}
       {Object.keys(everyLevel).map(
         (difficultyKey) => <div>
           <p>{difficultyKey}</p>
-          <Category useIgnoredLevels={useIgnoredLevels} clickedSpunky={clickedSpunky} allLevels={allLevels} setAllLevels={setAllLevels} handleRestart={handleRestart} selectedLevels={selectedLevels} setSelectedLevels={setSelectedLevels} difficultyKey={difficultyKey}></Category>
+          <Category hideLevels={hideLevels} useIgnoredLevels={useIgnoredLevels} clickedSpunky={clickedSpunky} allLevels={allLevels} setAllLevels={setAllLevels} handleRestart={handleRestart} selectedLevels={selectedLevels} setSelectedLevels={setSelectedLevels} difficultyKey={difficultyKey}></Category>
         </div>
       )}
       </div>
@@ -176,7 +199,7 @@ function App() {
           </div>
         </div> : <p>Select which levels to play</p>}
         {selectedLevels.length > 0 && <div className="absolute self-center bottom-0 mb-64 sm:mb-32 md:mb-6 left-1/2 md:-ml-12 flex flex-col gap-4">
-        <p className="pointer-events-nonex">{streak}</p>
+        <p className="pointer-events-nonex">{streak} {showLevelsNotInStreak ? "(" + streakLevels.length : ""}{showLevelsNotInStreak ? " unique)" : ""}</p>
           {answerRevealed && <button ref={buttonRef} className="w-24 h-12 bg-green-500 rounded-md cursor-pointer" onClick={() => handleRestart()}>Play Again</button>}
           {currentLevel && !answerRevealed && <button ref={buttonRef} className="cursor-pointer w-24 h-12 bg-amber-500 rounded-md" onClick={() => setAnswerRevealed(true)}>Reveal Answer</button>}
           {!currentLevel && <button ref={buttonRef} onClick={() => handleStartGame()} className="w-24 h-12 bg-purple-500 cursor-pointer rounded-md">Start</button>}

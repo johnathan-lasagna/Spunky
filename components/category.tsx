@@ -8,7 +8,7 @@ import { readLocalStorage, writeLocalStorage } from '../lib/localStorage';
 const response = await fetch(`${import.meta.env.BASE_URL}MasterStructure.json`);
 const everyLevel = await response.json();
 
-function Category({ difficultyKey, clickedSpunky, allLevels, setAllLevels, selectedLevels, setSelectedLevels, useIgnoredLevels }: { useIgnoredLevels: boolean, difficultyKey: string, clickedSpunky: boolean, handleRestart?: any, selectedLevels: string[], setSelectedLevels: React.Dispatch<React.SetStateAction<string[]>>, allLevels: string[], setAllLevels: React.Dispatch<React.SetStateAction<any>> }) {
+function Category({ difficultyKey, hideLevels, clickedSpunky, allLevels, setAllLevels, selectedLevels, setSelectedLevels, useIgnoredLevels }: { hideLevels: boolean; useIgnoredLevels: boolean, difficultyKey: string, clickedSpunky: boolean, handleRestart?: any, selectedLevels: string[], setSelectedLevels: React.Dispatch<React.SetStateAction<string[]>>, allLevels: string[], setAllLevels: React.Dispatch<React.SetStateAction<any>> }) {
     const [openCategories, setOpenCategories] = useState<string[]>([])
     const [levelsToIgnore, setLevelsToIgnore] = useState<string[]>(readLocalStorage(localStorageKey) || []);
 
@@ -55,7 +55,7 @@ function Category({ difficultyKey, clickedSpunky, allLevels, setAllLevels, selec
                   } else handleOpen(typeKey)
                 }}>{typeKey} <span className="text-xs">({Object.keys(everyLevel[difficultyKey][typeKey]).length})</span></p>
                 <div className="flex flex-col">
-                  {openCategories.indexOf(typeKey) !== -1 ? <div><button className="cursor-pointer select-none" onClick={() => handleClose(typeKey)}>^</button>{Object.keys(everyLevel[difficultyKey][typeKey]).sort((a, b) => {const aIgnored = levelsToIgnore.includes(a);const bIgnored = levelsToIgnore.includes(b);if (aIgnored !== bIgnored && !useIgnoredLevels) {return Number(aIgnored) - Number(bIgnored);};return a.localeCompare(b);}).map(
+                  {openCategories.indexOf(typeKey) !== -1 ? <div><button className="cursor-pointer select-none" onClick={() => handleClose(typeKey)}>^</button>{!hideLevels && Object.keys(everyLevel[difficultyKey][typeKey]).sort((a, b) => {const aIgnored = levelsToIgnore.includes(a);const bIgnored = levelsToIgnore.includes(b);if (aIgnored !== bIgnored && !useIgnoredLevels) {return Number(aIgnored) - Number(bIgnored);};return a.localeCompare(b);}).map(
                     (levelNameKey) => {
                       const inRotation = selectedLevels.indexOf(levelNameKey) !== -1;
                     return (<div style={{ color: inRotation ? "#ffffff" : "#ff7777"}}>
