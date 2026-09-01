@@ -55,7 +55,7 @@ function Category({ difficultyKey, clickedSpunky, allLevels, setAllLevels, selec
                   } else handleOpen(typeKey)
                 }}>{typeKey} <span className="text-xs">({Object.keys(everyLevel[difficultyKey][typeKey]).length})</span></p>
                 <div className="flex flex-col">
-                  {openCategories.indexOf(typeKey) !== -1 ? <div><button className="cursor-pointer select-none" onClick={() => handleClose(typeKey)}>^</button>{Object.keys(everyLevel[difficultyKey][typeKey]).sort((a, b) => {const aSelected = selectedLevels.includes(a);const bSelected = selectedLevels.includes(b);return Number(bSelected) - Number(aSelected);}).map(
+                  {openCategories.indexOf(typeKey) !== -1 ? <div><button className="cursor-pointer select-none" onClick={() => handleClose(typeKey)}>^</button>{Object.keys(everyLevel[difficultyKey][typeKey]).sort((a, b) => {const aIgnored = levelsToIgnore.includes(a);const bIgnored = levelsToIgnore.includes(b);if (aIgnored !== bIgnored && !useIgnoredLevels) {return Number(aIgnored) - Number(bIgnored);};return a.localeCompare(b);}).map(
                     (levelNameKey) => {
                       const inRotation = selectedLevels.indexOf(levelNameKey) !== -1;
                     return (<div style={{ color: inRotation ? "#ffffff" : "#ff7777"}}>
