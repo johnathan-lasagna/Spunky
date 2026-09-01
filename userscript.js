@@ -13,7 +13,6 @@
   let masterStructure = false;
 
   let selectedLevelDiv;
-  let selectedInput;
 
   const fileInput = document.createElement("input");
 
@@ -30,7 +29,7 @@
   fileInput.style.zIndex = "999999999";
   fileInput.style.display = "block";
 
-  fileInput.placeholder = "awaiting MasterStructure.json";
+  fileInput.placeholder = "awaiting MasterStructure.json...";
 
   document.body.appendChild(fileInput);
 
@@ -88,28 +87,23 @@
     selectedLevelDiv = document.createElement("div");
 
     selectedLevelDiv.innerHTML = `
-            <div style="display: flex; flex-direction: column; position: fixed; top: 0; width: 300px; height: 50px; z-index: 999999999999999999; margin-left: -150px; left: 50%; margin-top: 14px;">
-                <input style="position: relative; z-index: 99999999999999999999; pointer-events: auto;" type="text" placeholder="Paste lvl name...">
+            <div style="display: flex; flex-direction: column; position: absolute; top: 0; width: 300px; height: 50px; z-index: 9999999; margin-left: -150px; left: 50%; margin-top: 14px;">
+                <input type="text" placeholder="Paste lvl name...">
             </div>
         `;
 
     document.body.appendChild(selectedLevelDiv);
 
-    if (selectedInput) document.removeChild(selectedInput)
+    const input = selectedLevelDiv.querySelector("input");
 
-    const selectedInput = selectedLevelDiv.querySelector("input");
+    input.focus();
 
-    document.addEventListener("keydown", async (e) => {
-        e.stopImmediatePropagation();
+    input.addEventListener("keydown", async (event) => {
+        if (event.key === "Enter") {
 
-        selectedInput.focus();
+          const value = input.value;
 
-        if (e.key === "Enter") {
-        selectedInput.focus();
-
-          const value = selectedInput.value;
-
-          if (!(selectedInput.value.length > 0)) return;
+          if (!(value.length > 0)) return;
 
           if (masterStructure[Difficulty][Type][value.trim()]) {
             document.body.removeChild(selectedLevelDiv)
@@ -160,63 +154,6 @@
 
           document.body.removeChild(selectedLevelDiv)
         }
-    }, true);
-
-    selectedInput.addEventListener("keydown", async (event) => {
-      if (event.key === "Enter") {
-        const value = selectedInput.value;
-
-        if (!(selectedInput.value.length > 0)) return;
-
-        if (masterStructure[Difficulty][Type][value.trim()]) {
-          document.body.removeChild(selectedLevelDiv)
-          const alreadyHaveMessage = document.createElement("div");
-
-          alreadyHaveMessage.innerHTML = `
-                  <div style="color: #ff0000; display: flex; flex-direction: column; position: absolute; top: 0; width: 300px; height: 50px; z-index: 9999999; margin-left: -150px; left: 50%; margin-top: 14px;">
-                      Level already collected
-                  </div>
-              `;
-
-          document.body.appendChild(alreadyHaveMessage);
-
-          await new Promise(resolve => setTimeout(resolve, 1000));
-
-          document.body.removeChild(alreadyHaveMessage)
-
-          return;
-        }
-
-        let formattedForFileName = value.replace(/ /g, "_") + ".webp";
-
-        GM_download({
-          url: img.src,
-          name: formattedForFileName,
-          saveAs: true,
-          onerror: (error) => {
-            alert("Image download failed: " + error);
-          },
-        })
-
-        const previousVersion = structuredClone(masterStructure)
-        masterStructure[Difficulty][Type][value.trim()] = {}
-
-        const json = JSON.stringify(masterStructure, null, 2);
-        const blob = new Blob([json], { type: "application/json" });
-        const url = URL.createObjectURL(blob);
-
-        GM_download({
-            url: url,
-            name: "MasterStructure.json",
-            saveAs: true,
-            onerror: (error) => {
-              alert("JSON download failed: " + error);
-              masterStructure = { ...previousVersion }
-            },
-        });
-
-        document.body.removeChild(selectedLevelDiv)
-      }
     });
   });
 })();

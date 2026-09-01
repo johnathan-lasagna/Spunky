@@ -1,6 +1,7 @@
 // WARNING:
 // dogshit html below vvvvvv
 
+
 import { useState, useEffect, useRef } from "react";
 import Category from '../components/category';
 import packageJson from "../package.json";
@@ -20,6 +21,8 @@ function App() {
   const [streak, setStreak] = useState(0);
   const [image, setImage] = useState<any>();
   const [clickedSpunky, setClickedSpunky] = useState<boolean>(false);
+  const [useIgnoredLevels, setUseIgnoredLevels] = useState<boolean>(false);
+
   const inputRef = useRef<HTMLInputElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
 
@@ -124,10 +127,14 @@ function App() {
   return (
     <main className="min-h-screen w-screen flex flex-row bg-[#232328] text-slate-100">
       <div className="w-1/2 md:w-1/3 max-h-screen overflow-y-auto">
+      <div className="flex flex-row gap-2 text-xs">
+        <input onClick={() => setUseIgnoredLevels(!useIgnoredLevels)} name="Use all levels" title="Use ignored levels" type="checkbox" />
+        Use ignored levels
+      </div>
       {Object.keys(everyLevel).map(
         (difficultyKey) => <div>
           <p>{difficultyKey}</p>
-          <Category clickedSpunky={clickedSpunky} allLevels={allLevels} setAllLevels={setAllLevels} handleRestart={handleRestart} selectedLevels={selectedLevels} setSelectedLevels={setSelectedLevels} difficultyKey={difficultyKey}></Category>
+          <Category useIgnoredLevels={useIgnoredLevels} clickedSpunky={clickedSpunky} allLevels={allLevels} setAllLevels={setAllLevels} handleRestart={handleRestart} selectedLevels={selectedLevels} setSelectedLevels={setSelectedLevels} difficultyKey={difficultyKey}></Category>
         </div>
       )}
       </div>
