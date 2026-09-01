@@ -160,7 +160,13 @@ function App() {
               className="bg-cyan-100 h-12 w-64 text-black rounded-md"
               value={input}
               ref={inputRef}
-              onChange={(e) => setInput(e.target.value)}
+              onChange={(e) => {
+                if (e.target.value.toLowerCase().trim() === currentLevel.toLowerCase().trim()) {
+                  handleGuessLevel(e.target.value)
+                } else {
+                setInput(e.target.value)
+                }
+              }}
               onKeyDown={(e) => {
                 if (e.key === "Enter") {
                   handleGuessLevel(input);  
