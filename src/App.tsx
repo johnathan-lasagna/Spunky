@@ -222,6 +222,7 @@ function App() {
         <p className="text-xs">
           Want to contribute? <a className="underline" href="https://youtu.be/lstNDLiE_SY">Watch the video guide</a>
         </p>
+        <p className="text-xs">need 656 classic easies</p>
         <p className="text-xs">{packageJson.version}</p>
       </div>
     </main>

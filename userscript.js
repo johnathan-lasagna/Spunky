@@ -12,6 +12,27 @@
 
   let masterStructure = false;
 
+  let totalCount = 0;
+
+  const counter = document.createElement("div");
+
+  counter.textContent = "0";
+
+  Object.assign(counter.style, {
+    position: "fixed",
+    top: "20px",
+    right: "20px",
+    zIndex: "2147483647",
+    padding: "10px 15px",
+    background: "black",
+    color: "white",
+    fontSize: "30px",
+    fontWeight: "bold",
+    border: "2px solid white",
+  });
+
+  document.body.appendChild(counter);
+
   let selectedLevelDiv;
 
   const fileInput = document.createElement("input");
@@ -59,18 +80,38 @@
       target.parentElement?.parentElement?.parentElement?.parentElement;
     const spans = parent?.querySelectorAll("span");
 
-    const Difficulty = spans[2].innerHTML.toLowerCase().replace("\\n", "").trim();
-    const Type = spans[4].innerHTML.toLowerCase().replace("\\n", "").trim();
 
-    if (Difficulty === "easy" || Difficulty === "medium" || Difficulty === "hard" || Difficulty === "legendary" || Difficulty === "mythic") {
-      if (Type === "classic" || Type === "platformer") {
+
+    let Difficulty;
+    let Type;
+
+    if (spans[2] && spans[4]) {
+      Difficulty = spans[2].innerHTML.toLowerCase().replace(":", "").replace("\\n", "").trim();
+      Type = spans[4].innerHTML.toLowerCase().replace(":", "").replace("\\n", "").trim();
+    }
+
+    if (
+      Difficulty === "easy" || Difficulty === "medium" || Difficulty === "hard" || Difficulty === "legendary" || Difficulty === "mythic"
+    ) {} else {
+      const userInput = prompt("Type the difficulty:");
+
+      if (userInput === "easy" || userInput === "medium" || userInput === "hard" || userInput === "legendary" || userInput === "mythic") {
+        Difficulty = userInput;
       } else {
-        alert("Image must be selected from a real Sparky game")
+        return
+      }
+    }
+
+    if (
+      Type === "classic" || Type === "platformer"
+    ) {} else {
+      const userInput = prompt("classic or platformer?");
+
+      if (userInput === "classic" || userInput === "platformer") {
+        Type = userInput;
+      } else {
         return;
       }
-    } else {
-        alert("Image must be selected from a real Sparky game")
-        return;
     }
 
     const img = target.parentElement?.querySelectorAll("img")[0];
@@ -141,6 +182,10 @@
                   url: url,
                   name: "MasterStructure.json",
                   saveAs: true,
+                  onload: () => {
+                    totalCount++
+                    counter.textContent = `${totalCount}`
+                  },
                   oncancel: () => {
                     delete masterStructure[Difficulty][Type][value.toLowerCase()];
                   },
