@@ -105,7 +105,7 @@
 
           if (!(value.length > 0)) return;
 
-          if (masterStructure[Difficulty][Type][value.trim().toLowerCase()]) {
+          if (masterStructure[Difficulty][Type][value.toLowerCase()]) {
             document.body.removeChild(selectedLevelDiv)
             const alreadyHaveMessage = document.createElement("div");
 
@@ -131,7 +131,7 @@
             name: formattedForFileName,
             saveAs: true,
             onload: () => {
-              masterStructure[Difficulty][Type][value.trim().toLowerCase()] = {};
+              masterStructure[Difficulty][Type][value.toLowerCase()] = {};
 
               const json = JSON.stringify(masterStructure, null, 2);
               const blob = new Blob([json], { type: "application/json" });
@@ -142,10 +142,10 @@
                   name: "MasterStructure.json",
                   saveAs: true,
                   oncancel: () => {
-                    delete masterStructure[Difficulty][Type][value.trim().toLowerCase()];
+                    delete masterStructure[Difficulty][Type][value.toLowerCase()];
                   },
                   onerror: (error) => {
-                    delete masterStructure[Difficulty][Type][value.trim().toLowerCase()];
+                    delete masterStructure[Difficulty][Type][value.toLowerCase()];
                   },
               });
             },

@@ -74,7 +74,7 @@ function App() {
 
     const img = new Image();
 
-    img.src = `${import.meta.env.BASE_URL}${newLevel.trim().replace(/ /g, "_")}.webp`;
+    img.src = `${import.meta.env.BASE_URL}${newLevel.replace(/ /g, "_")}.webp`;
 
     img.onload = () => {
       setImage(
@@ -111,7 +111,7 @@ function App() {
 
     const img = new Image();
 
-    img.src = `${import.meta.env.BASE_URL}${(forceLevel || level).trim().replace(/ /g, "_")}.webp`;
+    img.src = `${import.meta.env.BASE_URL}${(forceLevel || level).replace(/ /g, "_")}.webp`;
 
     img.onload = () => {
       setImage(
