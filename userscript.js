@@ -62,7 +62,7 @@
     const Difficulty = spans[2].innerHTML.toLowerCase().replace("\\n", "").trim();
     const Type = spans[4].innerHTML.toLowerCase().replace("\\n", "").trim();
 
-    if (Difficulty === "easy" || Difficulty === "medium" || Difficulty === "hard") {
+    if (Difficulty === "easy" || Difficulty === "medium" || Difficulty === "hard" || Difficulty === "legendary" || Difficulty === "mythic") {
       if (Type === "classic" || Type === "platformer") {
       } else {
         alert("Image must be selected from a real Sparky game")
