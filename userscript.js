@@ -105,7 +105,7 @@
 
           if (!(value.length > 0)) return;
 
-          if (masterStructure[Difficulty][Type][value.trim()]) {
+          if (masterStructure[Difficulty][Type][value.trim().toLowerCase()]) {
             document.body.removeChild(selectedLevelDiv)
             const alreadyHaveMessage = document.createElement("div");
 
@@ -124,33 +124,39 @@
             return;
           }
 
-          let formattedForFileName = value.replace(/ /g, "_") + ".webp";
+          let formattedForFileName = value.toLowerCase().replace(/ /g, "_") + ".webp";
 
           GM_download({
             url: img.src,
             name: formattedForFileName,
             saveAs: true,
+            onload: () => {
+              masterStructure[Difficulty][Type][value.trim().toLowerCase()] = {};
+
+              const json = JSON.stringify(masterStructure, null, 2);
+              const blob = new Blob([json], { type: "application/json" });
+              const url = URL.createObjectURL(blob);
+
+              GM_download({
+                  url: url,
+                  name: "MasterStructure.json",
+                  saveAs: true,
+                  oncancel: () => {
+                    delete masterStructure[Difficulty][Type][value.trim().toLowerCase()];
+                  },
+                  onerror: (error) => {
+                    delete masterStructure[Difficulty][Type][value.trim().toLowerCase()];
+                  },
+              });
+            },
+            oncancel: () => {
+            },
             onerror: (error) => {
               alert("Image download failed: " + error);
             },
           })
 
-          const previousVersion = structuredClone(masterStructure)
-          masterStructure[Difficulty][Type][value.trim()] = {}
 
-          const json = JSON.stringify(masterStructure, null, 2);
-          const blob = new Blob([json], { type: "application/json" });
-          const url = URL.createObjectURL(blob);
-
-          GM_download({
-              url: url,
-              name: "MasterStructure.json",
-              saveAs: true,
-              onerror: (error) => {
-                alert("JSON download failed: " + error);
-                masterStructure = { ...previousVersion }
-              },
-          });
 
           document.body.removeChild(selectedLevelDiv)
         }
