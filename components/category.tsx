@@ -5,7 +5,7 @@ const localStorageKey = "Spunky2"
 
 import React, { useState } from "react";
 import { readLocalStorage, writeLocalStorage } from '../lib/localStorage';
-const response = await fetch(`${import.meta.env.BASE_URL}MasterStructure.json`);
+const response = await fetch(`${(import.meta as any).env.BASE_URL}MasterStructure.json`);
 const everyLevel = await response.json();
 
 function Category({ difficultyKey, hideLevels, clickedSpunky, allLevels, setAllLevels, selectedLevels, setSelectedLevels, useIgnoredLevels }: { hideLevels: boolean; useIgnoredLevels: boolean, difficultyKey: string, clickedSpunky: boolean, handleRestart?: any, selectedLevels: string[], setSelectedLevels: React.Dispatch<React.SetStateAction<string[]>>, allLevels: string[], setAllLevels: React.Dispatch<React.SetStateAction<any>> }) {
@@ -59,7 +59,7 @@ function Category({ difficultyKey, hideLevels, clickedSpunky, allLevels, setAllL
                     (levelNameKey) => {
                       const inRotation = selectedLevels.indexOf(levelNameKey) !== -1;
                     return (<div style={{ color: inRotation ? "#ffffff" : "#ff7777"}}>
-                      <button className="cursor-pointer select-none flex flex-col" onClick={() => (setSelectedLevels(selectedLevels.indexOf(levelNameKey) === -1 ? [...selectedLevels, levelNameKey] : selectedLevels.filter(val => val !== levelNameKey)), handleToggleIgnore(levelNameKey))}>{inRotation && <img className="w-24" src={`${import.meta.env.BASE_URL}${clickedSpunky ? "le_jet_prive_a_tyty" : levelNameKey.replace(/ /g, "_")}.webp`}/>}<p className="pb-4 -mt-1">{clickedSpunky ? "le jet prive a tyty" : levelNameKey}</p></button>
+                      <button className="cursor-pointer select-none flex flex-col" onClick={() => (setSelectedLevels(selectedLevels.indexOf(levelNameKey) === -1 ? [...selectedLevels, levelNameKey] : selectedLevels.filter(val => val !== levelNameKey)), handleToggleIgnore(levelNameKey))}>{inRotation && <img className="w-24" src={`${(import.meta as any).env.BASE_URL}${clickedSpunky ? "le_jet_prive_a_tyty" : levelNameKey.replace(/ /g, "_")}.webp`}/>}<p className="pb-4 -mt-1">{clickedSpunky ? "le jet prive a tyty" : levelNameKey}</p></button>
                       </div>)}
                   )}</div> : <button className="cursor-pointer select-none" onClick={() => handleOpen(typeKey)}>v</button>}
                 </div>
