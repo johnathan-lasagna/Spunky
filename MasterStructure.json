@@ -254,7 +254,8 @@
       "mind control": {},
       "xstep": {},
       "aura": {},
-      "tantrum": {}
+      "tantrum": {},
+      "cycles": {}
     },
     "platformer": {
       "throat of the world": {},
@@ -390,7 +391,8 @@
       "wild": {},
       "bit reaper": {},
       "we are not the same": {},
-      "koenigstein": {}
+      "koenigstein": {},
+      "game over": {}
     },
     "platformer": {
       "egg hunt": {},
@@ -470,7 +472,9 @@
       "ahippinandahoppin": {},
       "this map is bonkers": {},
       "hellfire": {},
-      "starship v2": {}
+      "starship v2": {},
+      "the polyomino": {},
+      "laptop repairs": {}
     },
     "platformer": {
       "phalcron": {},
@@ -741,6 +745,22 @@
       "trimethylxanthine": {},
       "utopia": {},
       "whywhenwhohowthen": {}
+    },
+    "classic": {},
+    "platformer": {
+      "100000 roentgens": {},
+      "133rd pink cloud": {},
+      "cliiiiickeeer": {},
+      "i have heights fear": {},
+      "tomato soup": {},
+      "really fun sorting": {}
     }
+  },
+  "mythic": {
+    "classic": {
+      "kpyt6ie l9gushki": {},
+      "hold time machine": {}
+    },
+    "platformer": {}
   }
 }
