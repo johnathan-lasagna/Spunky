@@ -12,6 +12,26 @@ function randomNumber(max: number) {
   return Math.floor(Math.random() * (max + 1));
 }
 
+function randomLevel(
+  levels: string[],
+  commonLevels: string[],
+) {
+  const newLevelChance = Math.max(
+    commonLevels.length / levels.length,
+    0.8
+  );
+
+  if (Math.random() < newLevelChance) {
+    return commonLevels[randomNumber(commonLevels.length - 1)];
+  }
+
+  const seenLevels = levels.filter(
+    level => !commonLevels.includes(level)
+  );
+
+  return seenLevels[randomNumber(seenLevels.length - 1)];
+}
+
 function App() {
   const [allLevels, setAllLevels] = useState<any>()
   const [selectedLevels, setSelectedLevels] = useState<string[]>([]);
@@ -87,11 +107,12 @@ function App() {
   }
 
   const handleRestart = (increaseStreak?: boolean, forceLevel?: string) => {
-    setAnswerRevealed(false)
+    setAnswerRevealed(false);
     setInput("");
+
     let level = currentLevel;
     while (level === currentLevel && selectedLevels.length !== 1){
-      level = selectedLevels[randomNumber(selectedLevels.length - 1)]
+      level = randomLevel(selectedLevels, selectedLevels.filter((lvl) => streakLevels.indexOf(lvl) === -1))
     }
     if (forceLevel) {
       setCurrentLevel(forceLevel)
@@ -99,12 +120,15 @@ function App() {
 
     if (increaseStreak) {
       if (streakLevels.indexOf(currentLevel) === -1) {
-        setStreakLevels([...streakLevels, currentLevel])
+        const allLevelsInStreak = streakLevels.length === selectedLevels.length
+        setStreakLevels(allLevelsInStreak ? [currentLevel] : [...streakLevels, currentLevel])
       }
       setStreak(streak + 1)
-    } else  {
-      setStreakLevels([])
-      setStreak(0)
+    } else {
+      // setStreak(0)
+      // setStreakLevels([])
+      setStreakLevels(streakLevels.indexOf(currentLevel) === -1 ? [...streakLevels, currentLevel] : streakLevels)
+      setStreak(streak + 1)
     }
 
     setImage(null);
@@ -144,10 +168,10 @@ function App() {
         <input onClick={() => setUseIgnoredLevels(!useIgnoredLevels)} name="Use all levels" title="Use ignored levels" type="checkbox" />
         Use ignored levels
         </div>
-        <div className="flex flex-row gap-2">
+        {/* <div className="flex flex-row gap-2">
         <input onClick={() => setShowLevelsNotInStreak(!showLevelsNotInStreak)} name="Show levels not in streak" title="Show levels not in streak" type="checkbox" />
         Show levels not in streak
-        </div>
+        </div> */}
         <div className="absolute top-0 flex flex-row gap-2 p-2">
         <input onClick={() => setHideLevels(!hideLevels)} name="Hide levels" title="Hide levels" type="checkbox" />
         Hide levels
@@ -164,7 +188,7 @@ function App() {
       <div className="w-1/2 md:w-1/3 text-center flex flex-col">
         {selectedLevels.length > 0 ? <div className="relative p-6 max-h-screen w-full flex flex-col items-center h-full border-8"
         style={{ borderColor:
-          currentLevel ?
+          (console.log(currentLevel), currentLevel) ?
           allLevels[currentLevel].difficulty === "easy" ?
             "#89d56d" :
             allLevels[currentLevel].difficulty === "medium" ?
