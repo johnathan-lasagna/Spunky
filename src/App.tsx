@@ -44,7 +44,7 @@ function App() {
   const [clickedSpunky, setClickedSpunky] = useState<boolean>(false);
   const [useIgnoredLevels, setUseIgnoredLevels] = useState<boolean>(false);
   const [hideLevels, setHideLevels] = useState<boolean>(false);
-  const [showLevelsNotInStreak, setShowLevelsNotInStreak] = useState<boolean>(false);
+  const [showLevelsNotInStreak, _setShowLevelsNotInStreak] = useState<boolean>(false);
 
   const inputRef = useRef<HTMLInputElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
