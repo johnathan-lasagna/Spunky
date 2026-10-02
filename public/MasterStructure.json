@@ -539,7 +539,10 @@
       "the only one": {},
       "arre robot": {},
       "mo": {},
-      "the bandere": {}
+      "the bandere": {},
+      "leyak": {},
+      "chromatic haze": {},
+      "stardust sanctuary": {}
     },
     "platformer": {
       "throat of the world": {},
@@ -723,7 +726,18 @@
       "apache": {},
       "nyan cats revenge": {},
       "droppy": {},
-      "double dimension": {}
+      "double dimension": {},
+      "molten mercury": {},
+      "fast stereo madness": {},
+      "trippy": {},
+      "mystery dungeon": {},
+      "capsule": {},
+      "winterbliss": {},
+      "dislike this level": {},
+      "eternal flame": {},
+      "okame overdrive": {},
+      "neur absence": {},
+      "in fi ni ty": {}
     },
     "platformer": {
       "egg hunt": {},
@@ -849,6 +863,7 @@
   },
   "hard": {
     "classic": {
+      "323": {},
       "unnamed piece": {},
       "phantasia": {},
       "dance of souls": {},
@@ -1056,7 +1071,17 @@
       "turn into a gd": {},
       "selvatic ruins": {},
       "red belly": {},
-      "glue rush": {}
+      "glue rush": {},
+      "speedstyling": {},
+      "amethystia": {},
+      "unnamed sequel": {},
+      "genahead": {},
+      "radiant funk": {},
+      "retro caverns": {},
+      "tapwreck": {},
+      "affright": {},
+      "gravity cycles": {},
+      "colors in the sky": {}
     },
     "platformer": {
       "phalcron": {},
