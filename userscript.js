@@ -80,8 +80,6 @@
       target.parentElement?.parentElement?.parentElement?.parentElement;
     const spans = parent?.querySelectorAll("span");
 
-
-
     let Difficulty;
     let Type;
 
@@ -113,6 +111,8 @@
         return;
       }
     }
+
+    if (Type === "platformer") return;
 
     const img = target.parentElement?.querySelectorAll("img")[0];
 
