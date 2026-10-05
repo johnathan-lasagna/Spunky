@@ -33,7 +33,7 @@ function randomLevel(
 }
 
 function App() {
-  const [allLevels, setAllLevels] = useState<any>()
+  const [allLevels, setAllLevels] = useState<any>();
   const [selectedLevels, setSelectedLevels] = useState<string[]>([]);
   const [currentLevel, setCurrentLevel] = useState<string>("");
   const [answerRevealed, setAnswerRevealed] = useState<boolean>(false);
