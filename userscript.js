@@ -12,11 +12,13 @@
 
   let masterStructure = false;
 
-  let totalCount = 0;
+  let easyCount = 0;
+  let mediumCount = 0;
+  let hardCount = 0;
 
   const counter = document.createElement("div");
 
-  counter.textContent = "0";
+  counter.textContent = "0.0.0";
 
   Object.assign(counter.style, {
     position: "fixed",
@@ -24,18 +26,17 @@
     right: "20px",
     zIndex: "2147483647",
     padding: "10px 15px",
-    background: "black",
-    color: "white",
-    fontSize: "30px",
+    color: "#00ff7d",
+    fontSize: "22px",
     fontWeight: "bold",
-    border: "2px solid white",
   });
 
   document.body.appendChild(counter);
 
   let selectedLevelDiv;
 
-  const fileInput = document.createElement("input");
+  const fileInput =
+    document.createElement("input");
 
   fileInput.type = "file";
   fileInput.accept = ".json,application/json";
@@ -50,161 +51,252 @@
   fileInput.style.zIndex = "999999999";
   fileInput.style.display = "block";
 
-  fileInput.placeholder = "awaiting MasterStructure.json...";
+  fileInput.placeholder =
+    "awaiting MasterStructure.json...";
 
   document.body.appendChild(fileInput);
 
-  fileInput.addEventListener("change", async () => {
-    const file = fileInput.files[0];
+  fileInput.addEventListener(
+    "change",
+    async () => {
+      const file = fileInput.files[0];
 
-    if (!file) return;
+      if (!file) return;
 
-    const text = await file.text();
-    const data = JSON.parse(text);
+      const text = await file.text();
+      const data = JSON.parse(text);
 
-    masterStructure = data;
+      masterStructure = data;
 
-    document.body.removeChild(fileInput);
-  });
+      document.body.removeChild(fileInput);
+    },
+  );
 
   fileInput.click();
 
-  document.addEventListener("dragstart", async (e) => {
-    if (!masterStructure) {
-      alert("Upload your MasterStructure.json first!");
-      return;
-    }
-    let target = e.target;
-
-    const parent =
-      target.parentElement?.parentElement?.parentElement?.parentElement;
-    const spans = parent?.querySelectorAll("span");
-
-    let Difficulty;
-    let Type;
-
-    if (spans[2] && spans[4]) {
-      Difficulty = spans[2].innerHTML.toLowerCase().replace(":", "").replace("\\n", "").trim();
-      Type = spans[4].innerHTML.toLowerCase().replace(":", "").replace("\\n", "").trim();
-    }
-
-    if (
-      Difficulty === "easy" || Difficulty === "medium" || Difficulty === "hard" || Difficulty === "legendary" || Difficulty === "mythic"
-    ) {} else {
-      const userInput = prompt("Type the difficulty:");
-
-      if (userInput === "easy" || userInput === "medium" || userInput === "hard" || userInput === "legendary" || userInput === "mythic") {
-        Difficulty = userInput;
-      } else {
-        return
-      }
-    }
-
-    if (
-      Type === "classic" || Type === "platformer"
-    ) {} else {
-      const userInput = prompt("classic or platformer?");
-
-      if (userInput === "classic" || userInput === "platformer") {
-        Type = userInput;
-      } else {
+  document.addEventListener(
+    "dragstart",
+    async (e) => {
+      if (!masterStructure) {
+        alert(
+          "Upload your MasterStructure.json first!",
+        );
         return;
       }
-    }
+      let target = e.target;
 
-    if (Type === "platformer") return;
+      const parent =
+        target.parentElement?.parentElement
+          ?.parentElement?.parentElement;
+      const spans =
+        parent?.querySelectorAll("span");
 
-    const img = target.parentElement?.querySelectorAll("img")[0];
+      let Difficulty;
+      let Type;
 
-    if (!img) {
-      console.log("No image found :(((((((");
-      return;
-    }
+      if (spans[2] && spans[4]) {
+        Difficulty = spans[2].innerHTML
+          .toLowerCase()
+          .replace(":", "")
+          .replace("\\n", "")
+          .trim();
+        Type = spans[4].innerHTML
+          .toLowerCase()
+          .replace(":", "")
+          .replace("\\n", "")
+          .trim();
+      }
 
-    if (selectedLevelDiv) {
-      document.body.removeChild(selectedLevelDiv)
-    }
+      if (
+        Difficulty === "easy" ||
+        Difficulty === "medium" ||
+        Difficulty === "hard" ||
+        Difficulty === "legendary" ||
+        Difficulty === "mythic"
+      ) {
+      } else {
+        const userInput = prompt(
+          "Type the difficulty:",
+        );
 
-    selectedLevelDiv = document.createElement("div");
+        if (
+          userInput === "easy" ||
+          userInput === "medium" ||
+          userInput === "hard" ||
+          userInput === "legendary" ||
+          userInput === "mythic"
+        ) {
+          Difficulty = userInput;
+        } else {
+          return;
+        }
+      }
 
-    selectedLevelDiv.innerHTML = `
+      if (
+        Type === "classic" ||
+        Type === "platformer"
+      ) {
+      } else {
+        const userInput = prompt(
+          "classic or platformer?",
+        );
+
+        if (
+          userInput === "classic" ||
+          userInput === "platformer"
+        ) {
+          Type = userInput;
+        } else {
+          return;
+        }
+      }
+
+      if (Type === "platformer") return;
+
+      const img =
+        target.parentElement?.querySelectorAll(
+          "img",
+        )[0];
+
+      if (!img) {
+        console.log("No image found :(((((((");
+        return;
+      }
+
+      if (selectedLevelDiv) {
+        document.body.removeChild(
+          selectedLevelDiv,
+        );
+      }
+
+      selectedLevelDiv =
+        document.createElement("div");
+
+      selectedLevelDiv.innerHTML = `
             <div style="display: flex; flex-direction: column; position: absolute; top: 0; width: 300px; height: 50px; z-index: 9999999; margin-left: -150px; left: 50%; margin-top: 14px;">
                 <input type="text" placeholder="Paste lvl name...">
             </div>
         `;
 
-    document.body.appendChild(selectedLevelDiv);
+      document.body.appendChild(selectedLevelDiv);
 
-    const input = selectedLevelDiv.querySelector("input");
+      const input =
+        selectedLevelDiv.querySelector("input");
 
-    input.focus();
+      input.focus();
 
-    input.addEventListener("keydown", async (event) => {
-        if (event.key === "Enter") {
+      input.addEventListener(
+        "keydown",
+        async (event) => {
+          if (event.key === "Enter") {
+            const value = input.value;
 
-          const value = input.value;
+            if (!(value.length > 0)) return;
 
-          if (!(value.length > 0)) return;
+            if (
+              masterStructure[Difficulty][Type][
+                value.toLowerCase()
+              ]
+            ) {
+              document.body.removeChild(
+                selectedLevelDiv,
+              );
+              const alreadyHaveMessage =
+                document.createElement("div");
 
-          if (masterStructure[Difficulty][Type][value.toLowerCase()]) {
-            document.body.removeChild(selectedLevelDiv)
-            const alreadyHaveMessage = document.createElement("div");
-
-            alreadyHaveMessage.innerHTML = `
+              alreadyHaveMessage.innerHTML = `
                     <div style="color: #ff0000; display: flex; flex-direction: column; position: absolute; top: 0; width: 300px; height: 50px; z-index: 9999999; margin-left: -150px; left: 50%; margin-top: 14px;">
                         Level already collected
                     </div>
                 `;
 
-            document.body.appendChild(alreadyHaveMessage);
+              document.body.appendChild(
+                alreadyHaveMessage,
+              );
 
-            await new Promise(resolve => setTimeout(resolve, 1000));
+              await new Promise((resolve) =>
+                setTimeout(resolve, 1000),
+              );
 
-            document.body.removeChild(alreadyHaveMessage)
+              document.body.removeChild(
+                alreadyHaveMessage,
+              );
 
-            return;
-          }
+              return;
+            }
 
-          let formattedForFileName = value.toLowerCase().replace(/ /g, "_") + ".webp";
+            let formattedForFileName =
+              value
+                .toLowerCase()
+                .replace(/ /g, "_") + ".webp";
 
-          GM_download({
-            url: img.src,
-            name: formattedForFileName,
-            saveAs: true,
-            onload: () => {
-              masterStructure[Difficulty][Type][value.toLowerCase()] = {};
+            GM_download({
+              url: img.src,
+              name: formattedForFileName,
+              saveAs: true,
+              onload: () => {
+                masterStructure[Difficulty][Type][
+                  value.toLowerCase()
+                ] = {};
 
-              const json = JSON.stringify(masterStructure, null, 2);
-              const blob = new Blob([json], { type: "application/json" });
-              const url = URL.createObjectURL(blob);
+                const json = JSON.stringify(
+                  masterStructure,
+                  null,
+                  2,
+                );
+                const blob = new Blob([json], {
+                  type: "application/json",
+                });
+                const url =
+                  URL.createObjectURL(blob);
 
-              GM_download({
+                GM_download({
                   url: url,
                   name: "MasterStructure.json",
                   saveAs: true,
                   onload: () => {
-                    totalCount++
-                    counter.textContent = `${totalCount}`
+                    if (
+                      Difficulty.toLowerCase() ===
+                      "easy"
+                    ) {
+                      easyCount++;
+                    } else if (
+                      Difficulty.toLowerCase() ===
+                      "medium"
+                    ) {
+                      mediumCount++;
+                    } else {
+                      hardCount++;
+                    }
+                    counter.textContent = `${easyCount}.${mediumCount}.${hardCount}`;
                   },
                   oncancel: () => {
-                    delete masterStructure[Difficulty][Type][value.toLowerCase()];
+                    delete masterStructure[
+                      Difficulty
+                    ][Type][value.toLowerCase()];
                   },
                   onerror: (error) => {
-                    delete masterStructure[Difficulty][Type][value.toLowerCase()];
+                    delete masterStructure[
+                      Difficulty
+                    ][Type][value.toLowerCase()];
                   },
-              });
-            },
-            oncancel: () => {
-            },
-            onerror: (error) => {
-              alert("Image download failed: " + error);
-            },
-          })
+                });
+              },
+              oncancel: () => {},
+              onerror: (error) => {
+                alert(
+                  "Image download failed: " +
+                    error,
+                );
+              },
+            });
 
-
-
-          document.body.removeChild(selectedLevelDiv)
-        }
-    });
-  });
+            document.body.removeChild(
+              selectedLevelDiv,
+            );
+          }
+        },
+      );
+    },
+  );
 })();

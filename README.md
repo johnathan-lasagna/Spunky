@@ -13,8 +13,8 @@ Minimal TypeScript + React + Tailwind CSS setup powered by Vite.
 
 `vite.config.ts` sets the build base path to `/Spunky/` during `vite build`, which matches this repository name for GitHub Pages publishing.
 
-
 ## to be added:
+
 1. manual difficulty and type insertion
 2. batches for when there are more than 100 lvls in a section
 
@@ -33,7 +33,6 @@ Minimal TypeScript + React + Tailwind CSS setup powered by Vite.
 ## To update github pages:
 
 1. npm run deploy
-
 
 # How to contribute
 
